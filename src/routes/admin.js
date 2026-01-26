@@ -5,6 +5,10 @@ const adminController = require('../controllers/adminController');
 const router = new express.Router();
 const path = require('path');
 const app = express();  
+const upload = require('../middlewares/upload');
+
+router.post('/eleves', upload.single('photo'), adminController.eleveStore);
+
 
 
 router.get("/", adminController.index);

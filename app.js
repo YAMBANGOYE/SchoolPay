@@ -7,39 +7,60 @@ const userRoutes = require('./src/routes/users');
 const adminRoutes = require('./src/routes/admin');
 const ecoleRoutes = require('./src/routes/ecoles');
 const classeRoutes = require('./src/routes/classe');
+const AuthRoutes = require('./src/routes/auth');
 const { engine } = require("express-handlebars");
-
+const mongoose = require('mongoose');
 
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// STATIC
 app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'uploads')));
+
+// ✅ MongoStore correct pour connect-mongo v6
+const MongoStore = require('connect-mongo').default;
 
 app.use(session({
-    secret: 'tonSecretSuperSecreto', // clé secrète pour sécuriser la session
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1h
+  secret: 'tonSecretUltraSecurise',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: 'mongodb+srv://kristolyambangoye_db_user:sqL9g0Y1CJrFvY58@cluster0.fwbytb3.mongodb.net/?appName=Cluster0'
+,
+    collectionName: 'sessions'
+  }),
+  cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 jour
 }));
 
-//config handlebars
-app.engine('handlebars',engine());
+// Handlebars
+app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname,"views"));
 
+// Connect DB
 ConnectDb().catch(err => console.log(err));
 
+// Body parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Routes
+AuthRoutes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
-/*
-app.use(eleveRoutes);
-app.use(ecoleRoutes);
-app.use(classeRoutes);
+app.use("/ecoles", ecoleRoutes);
+app.use("/auth",AuthRoutes);
 
-*/
+
+// Rendre l'utilisateur disponible dans toutes les vues
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.username || null;
+  next();
+});
+
+// Start server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });

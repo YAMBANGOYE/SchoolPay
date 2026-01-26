@@ -7,13 +7,6 @@ const ecole = require('../models/ecole');
 
 //Creation du formulaire de creation
 
-/*
-router.get('/eleve/',(req,res)=>{
-    res.render('eleve/add',{
-        Title: "Wesh"
-    });
-})
-    */
 
 exports.login = (req, res) => {
 

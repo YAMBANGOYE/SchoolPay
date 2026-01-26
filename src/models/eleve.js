@@ -5,7 +5,7 @@ const Eleveschema = new mongoose.Schema({
     ecole: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ecole', 
-        required: true 
+        required: false 
     },
     user: { 
         type: mongoose.Schema.Types.ObjectId, 
@@ -20,11 +20,30 @@ const Eleveschema = new mongoose.Schema({
         type: String,
         required: true 
     },
+    telephone: { 
+        type: String,
+        required: true 
+    },
+    email: { 
+        type: String,
+        required: true 
+    },
+    username: { 
+        type: String,
+        required: false 
+    },
+    
      status: {
         type: String,
         enum: ["A jour", "En attente", "En retarde"],
-        required: true
-    }
+        required: false
+    },
+    datenaissance: { 
+        type: String,
+        required: true 
+    },
+    qrCode: String,       
+    photo: String
 }, { timestamps: true })
 
 module.exports = mongoose.model('Eleve', Eleveschema);

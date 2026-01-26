@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();  
 
 
-router.get("/login", userController.login);
+///router.get("/login", userController.login);
 
 router.get("/logout", userController.logout);
 
