@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
+  "homepage": "https://github.com/YAMBANGOYE/SchoolPay#readme",
+  "bugs": {
+    "url": "https://github.com/YAMBANGOYE/SchoolPay/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YAMBANGOYE/SchoolPay.git"
+  },
   "license": "ISC",
   "author": "",
   "type": "commonjs",

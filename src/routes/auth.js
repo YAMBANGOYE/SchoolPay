@@ -20,6 +20,12 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// Inscription
+router.get('/login', (req, res) => {
+  res.render('auth/login');
+});
+
+
 // Connexion
 router.post('/login', async (req, res) => {
   const { email, password } = req.body; // ✅ déclaration ici
@@ -38,6 +44,10 @@ router.post('/login', async (req, res) => {
 
   req.session.userId = user._id;
   req.session.username = user.username;
+  req.session.userphoto = user.photo;
+  req.session.uersstatus = user.status;
+  
+  console.log(user);
 
   res.redirect('/admin');
 });

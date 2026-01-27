@@ -46,19 +46,21 @@ ConnectDb().catch(err => console.log(err));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Routes
-AuthRoutes
-app.use("/", userRoutes);
-app.use("/admin", adminRoutes);
-app.use("/ecoles", ecoleRoutes);
-app.use("/auth",AuthRoutes);
-
 
 // Rendre l'utilisateur disponible dans toutes les vues
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.username || null;
   next();
 });
+
+// Routes
+app.use("/", userRoutes);
+app.use("/admin", adminRoutes);
+app.use("/ecoles", ecoleRoutes);
+app.use("/auth",AuthRoutes);
+
+
+
 
 // Start server
 app.listen(port, () => {
