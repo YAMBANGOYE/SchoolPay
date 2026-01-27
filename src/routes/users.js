@@ -5,7 +5,7 @@ const userController = require('../controllers/userController');
 const router = new express.Router();
 const path = require('path');
 const app = express();  
-
+const upload = require('../middlewares/upload');
 
 ///router.get("/login", userController.login);
 
@@ -14,6 +14,11 @@ router.get("/logout", userController.logout);
 //router.get("/dashboard", userController.index);
 
 router.post("/login", userController.auth);
+router.get("/", userController.show);
+
+router.get("/enregistre", userController.register);
+
+router.post('/enregistre', upload.single('photo'), userController.store);
 
 
 /*

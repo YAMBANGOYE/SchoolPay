@@ -4,7 +4,6 @@ const Eleve = require('../models/eleve');
 const User = require('../models/user');
 const ecole = require('../models/ecole');
 
-
 //Creation du formulaire de creation
 
 
@@ -15,7 +14,63 @@ exports.login = (req, res) => {
     });
 };
 
+exports.register = (req, res) => {
 
+    res.render("user/add", {
+      Title: "Connection"
+    });
+};
+ 
+exports.show = async (req, res) => {
+    //chercher utilisateur en ligne
+  //  const userenligne = await Eleve.findOne({_id: req.params.id}).countDocuments();
+
+    const nbrUser = await User.countDocuments();
+    const users = await  User.find().lean();
+ 
+    res.render("user/usershow", {
+      Title: "Connection",
+      users: users,
+      nbrUser: nbrUser,
+      userActive: 'active'
+      
+    });
+};
+
+exports.store = async (req, res) => {
+
+    try {
+        const { 
+            nom,
+            prenom,
+            username, 
+            email, 
+            telephone,
+            password,
+            status
+         } = req.body;
+        const user = new User({ 
+            nom,
+            prenom,
+            username, 
+            email, 
+            telephone,
+            status,
+            password
+        });
+
+         if (req.file) {
+            user.photo = req.file.filename; // ⚡ juste le nom du fichier
+        }
+        await user.save();
+        console.log('Utilisateur enregistré :', user.username);
+        res.redirect('/user/login');
+      } catch (err) {
+        console.error(err);
+        res.send('Erreur lors de l’inscription');
+      }
+
+};
 
 exports.logout = (req, res) => {
 

@@ -2,9 +2,41 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  nom: { 
+    type: String, 
+    required: true 
+  },
+  prenom: { 
+    type: String, 
+    required: true 
+  },
+  username: { 
+    type: String, 
+    required: true 
+  },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  telephone: { 
+    type: String, 
+    required: true
+  },
+  enligne: { 
+    type: Boolean, 
+    required: true, 
+    default: false
+  },
+  status: { 
+    type: String,
+      enum: ["superadmin", "admin", "redponsable"],
+      required: true
+  },
+  password: { 
+    type: String, 
+    required: true 
+  }
 });
 
 /* 🔐 Hash du mot de passe */

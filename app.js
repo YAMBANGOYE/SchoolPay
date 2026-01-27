@@ -50,14 +50,17 @@ app.use(express.json());
 // Rendre l'utilisateur disponible dans toutes les vues
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.username || null;
+  res.locals.currentStatus = req.session.userstatus || null;
+  res.locals.currentPhoto = req.session.userphoto || null;
   next();
 });
 
 // Routes
-app.use("/", userRoutes);
+app.use("/users", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/ecoles", ecoleRoutes);
 app.use("/auth",AuthRoutes);
+
 
 
 
