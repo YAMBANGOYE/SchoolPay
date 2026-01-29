@@ -20,6 +20,7 @@ router.get("/enregistre", userController.register);
 
 router.post('/enregistre', upload.single('photo'), userController.store);
 
+router.get("/:id", userController.showOne);
 
 /*
 // Endpoint to create a new user

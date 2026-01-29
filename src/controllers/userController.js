@@ -37,6 +37,20 @@ exports.show = async (req, res) => {
     });
 };
 
+exports.showOne = async (req, res) => {
+  
+     try {
+            const Users = await User.findOne({_id: req.params.id}).lean();
+            console.log(Users);
+                res.render('user/detail', { 
+                    Users: Users,
+                    userActive: 'active',
+                    title: 'Compte utilisateur'}); 
+            } catch (error) {
+                res.status(400).send(error);
+            }
+};
+
 exports.store = async (req, res) => {
 
     try {

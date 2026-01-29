@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
     type: String,
       enum: ["superadmin", "admin", "redponsable"],
       required: true
+  },
+  photo: { 
+    photo: String 
   },
   password: { 
     type: String, 
