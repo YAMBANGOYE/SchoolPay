@@ -11,11 +11,13 @@
                 <!-- Settings Content -->
                 <div class="glass-card">
                     <!-- Profile Tab -->
+                <form action="/users/enregistre" method="POST" enctype="multipart/form-data">
+
                     <div class="settings-tab-content active" id="tab-profile">
                         <div class="profile-header">
                             <div class="profile-avatar-large ">
                         <img id="preview" alt="Preview" style="display:none;" width="100" height="100"/>
-                                <input type="file" id="fileInput" hidden />
+                                <input type="file" id="fileInput" name="photo" hidden />
 
                             <label for="fileInput" class="upload-btn">
                                 <div class="profile-avatar-edit">
@@ -34,7 +36,6 @@
 
                         <div class="settings-section">
                             <h3 class="settings-section-title">Information du compte</h3>
-                          <form action="/users/enregistre" method="POST" enctype="multipart/form-data">
                             <div class="form-grid">
                                 <div class="form-group-settings">
                                     <label>Nom</label>
@@ -68,9 +69,7 @@
                                             </select>
                                 </div>
                                 <div class="form-group-settings full-width">
-                                    <label
-                                            class="form-label">Photo</label><input type="file" class="form-input"
-                                            name="photo" accept="image/*">
+                                   
                                 </div>
                                  <div class="form-group-settings">
                                     <label>Passwors</label>

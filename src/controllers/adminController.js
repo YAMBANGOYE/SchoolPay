@@ -66,8 +66,9 @@ exports.detailEleve = async(req, res) => {
 exports.eleveAdd = async(req, res) => {
      try {
 
-            res.render('eleve/add', { 
-                title: 'Ajouter Eleve'}); 
+            const Users = await User.findOne().lean();
+
+            res.render('eleve/add', {User}); 
         } catch (error) {
             res.status(400).send(error);
         }

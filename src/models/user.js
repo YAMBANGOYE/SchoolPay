@@ -34,8 +34,13 @@ const userSchema = new mongoose.Schema({
       required: true
   },
   photo: { 
-    photo: String 
+    type: String 
   },
+  user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+      },
   password: { 
     type: String, 
     required: true 
