@@ -7,7 +7,7 @@ const Eleveschema = new mongoose.Schema({
         ref: 'Ecole', 
         required: false 
     },
-    user: { 
+    responsable: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User' 
     },
@@ -45,6 +45,8 @@ const Eleveschema = new mongoose.Schema({
     qrCode: String,       
     photo: String
 }, { timestamps: true })
+
+
 
 module.exports = mongoose.model('Eleve', Eleveschema);
 

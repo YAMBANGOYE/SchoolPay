@@ -1,45 +1,17 @@
 const express = require('express');
-const Eleve = require('../models/eleve');
+const User = require('../models/user');
 const Ecole = require('../models/ecole');
-
+const eleveController = require('../controllers/eleveController');
 const router = new express.Router();
 const path = require('path');
 const app = express();  
+const upload = require('../middlewares/upload');
 
-router.post('/eleve', async (req, res, next) => {
-    const eleve = new Eleve(req.body);
-    try {
 
-        const saveEleve = await eleve.save();
-        res.status(201).send(saveEleve);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
+router.get("/", eleveController.index);
+router.get("/:id/one", eleveController.getOne);
+router.get("/create", eleveController.create);
+router.post("/create", upload.single('photo'), eleveController.store);
+router.get('/:id', eleveController.remove);
 
-router.get('/eleves', async (req, res) => {
-  try {
-        const eleves = await Eleve.find().lean();
- console.log(eleves);
-        res.render('ecole/eleve', { eleves });
-        //res.send(eleves);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
-
-router.get('/elevecreate', async (req, res) => {
- 
-  try {
-        const eleves = await Eleve.find().lean();
-        const ecoles = await Ecole.find().lean();
- 
-        res.render('ecole/elevecreate', { ecoles });
-        //res.send(eleves);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-
- // res.render('elevecreate');
-});
 module.exports = router;

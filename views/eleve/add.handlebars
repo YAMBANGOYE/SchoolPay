@@ -11,16 +11,24 @@
                 <!-- Settings Content -->
                 <div class="glass-card">
                     <!-- Profile Tab -->
+                    <form action="/eleves/create" method="POST" enctype="multipart/form-data">
+
                     <div class="settings-tab-content active" id="tab-profile">
                         <div class="profile-header">
                             <div class="profile-avatar-large ">
-                                <img src="/img/undraw_profile_3.svg" alt="">
+                              <img id="preview" alt="Preview" style="display:none;" width="100" height="100"/>
+                                <input type="file" id="fileInput" name="photo" hidden />
+
+                                 <label for="fileInput" class="upload-btn">
                                 <div class="profile-avatar-edit">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                     </svg>
                                 </div>
+                                </label>
+
+                               
                             </div>
                             <div class="profile-info">
                                 
@@ -30,7 +38,7 @@
 
                         <div class="settings-section">
                             <h3 class="settings-section-title">Profile Information</h3>
-                          <form action="/admin/eleves" method="POST" enctype="multipart/form-data">
+
                             <div class="form-grid">
                                 <div class="form-group-settings">
                                     <label>Nom</label>
@@ -57,25 +65,31 @@
                                     <input type="tel" placeholder="" name="tuteur">
                                 </div>
                                 <div class="form-group-settings">
-                                    <label>Ecole</label>
-                                    <input type="tel" placeholder="" >
+                                     <label for="exampleFormControlSelect1" class="form-label">Ecole</label>
+                                            <select class="settings-select" id="exampleFormControlSelect1" name="ecole">
+                                                <option value="">-- Selectionner un ecole --</option>
+                                               {{#each Ecoles}}
+                                                    <option value="{{_id}}">{{libelle}}</option>
+                                                {{/each}}
+
+                                            </select>
                                 </div>
                                 <div class="form-group-settings">
-                                    <label>Ecole</label>
-                                    <input type="tel" placeholder="" >
+                                    <label for="exampleFormControlSelect1" class="form-label">Redponsable</label>
+                                            <select class="settings-select" id="exampleFormControlSelect1" name="responsable">
+                                                <option value="">-- Selectionner un responsable</option>
+                                                {{#each Users}}
+                                                <option value="{{this._id}}">{{nom}} {{prenom}}</option>
+                                                {{/each}}
+
+                                            </select>
                                 </div>
                                 <div class="form-group-settings">
-                                    <label class="form-label">Photo</label>
-                                    <input type="file" class="form-input" name="photo" accept="image/*">
+                                     
                                 </div>
                                 
                                     <div class="form-group-settings">
-                                    <label for="exampleFormControlSelect1" class="form-label">Redponsable</label>
-                                            <select class="settings-select" id="exampleFormControlSelect1" name="status">
-                                                {{#each Users}}
-                                                <option value="">{{this.prenom}}</option>
-                                                {{/each}}
-                                            </select>
+                                    
                                 
                                 </div>
                             </div>
@@ -108,4 +122,25 @@
             </div>
         </main>
     </div>
+<script>
+    const input = document.getElementById("fileInput");
+    const preview = document.getElementById("preview");
+
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("Veuillez sélectionner une image");
+        return;
+      }
+
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = "block";
+
+      preview.onload = () => {
+        URL.revokeObjectURL(preview.src);
+      };
+    });
+  </script>
 

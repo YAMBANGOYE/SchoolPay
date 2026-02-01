@@ -27,13 +27,12 @@
                             </button>
                             </a>
                             <button class="card-btn">Imprimmer</button>
-                                    <select class="settings-select" id="ecole" name="ecole">
+                                    <select class="settings-select" id="exampleFormControlSelect1" name="responsable">
                                                 <option value="">-- Tri par ecole --</option>
-                                               {{#each Ecoles}}
-                                                    <option value="{{libelle}}">{{libelle}}</option>
-                                                {{/each}}
+                                               
+                                                <option value="">ty</option>
                                             </select>
-                                    
+
                             </select>
                         </div>
                     </div>
@@ -41,23 +40,23 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Nom</th>
+                                    <th>Nom et mail</th>
                                     <th>Prenom</th>
-                                    <th>Tuteur</th>
-                                    <th>Etablissement</th>
-                                    <th>Status</th>
+                                    <th>Addresse</th>
+                                    <th>Contact</th>
+                                    <th>Active</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="eleves-body">
+                            <tbody>
                                 <!-- les couleurs du status change-->
                                 {{#each Eleves}}
-                                 <tr data-ecole="{{ecole.libelle}}">
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{nom}}</span><span class="table-user-email">{{responsable.email}}</span></div></div></td>
-                                    <td>{{prenom}}</td>
-                                    <td>{{responsable.nom}}</td>
-                                    <td>{{ecole.libelle}}</td>
-                                    <td><span class="status-badge completed">{{enligne}}</span></td>
+                                <tr>
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{libelle}}</span><span class="table-user-email">{{email}}</span></div></div></td>
+                                    <td>{{libelle}}</td>
+                                    <td>{{addresse}}</td>
+                                    <td>{{contact}}</td>
+                                    <td><span class="status-badge completed">{{isActive}}</span></td>
                                     <td>
                                       <div class="navbar-right">
                                         <a href="/eleves/{{_id}}/one">
@@ -190,42 +189,4 @@
     })
     .then(res => res.ok ? location.reload() : alert('Erreur'))
   }
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const selectEcole = document.getElementById("ecole");
-  const tbody = document.getElementById("eleves-body");
-
-  function trierEleves() {
-    const ecoleChoisie = selectEcole.value;
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-
-    // On trie d'abord par texte de la colonne "Etablissement"
-    rows.sort((a, b) => {
-      const ecoleA = a.querySelector("td:nth-child(4)").textContent.trim().toLowerCase();
-      const ecoleB = b.querySelector("td:nth-child(4)").textContent.trim().toLowerCase();
-
-      return ecoleA.localeCompare(ecoleB);
-    });
-
-    // Si une école est sélectionnée, on ne garde que ses lignes visibles
-    rows.forEach(row => {
-      if (!ecoleChoisie || row.dataset.ecole === ecoleChoisie) {
-        row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
-    });
-
-    // Réinjecte toutes les lignes triées
-    tbody.innerHTML = "";
-    rows.forEach(row => tbody.appendChild(row));
-  }
-
-  // Tri initial au chargement
-  trierEleves();
-
-  // Tri + filtrage à chaque changement de select
-  selectEcole.addEventListener("change", trierEleves);
-});
 </script>

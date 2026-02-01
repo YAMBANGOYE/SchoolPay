@@ -4,6 +4,7 @@ require('dotenv').config();
 const { ConnectDb } = require('./src/services/mongoose');
 const User = require('./src/models/user');
 const userRoutes = require('./src/routes/users');
+const eleveRoutes = require('./src/routes/eleves');
 const adminRoutes = require('./src/routes/admin');
 const ecoleRoutes = require('./src/routes/ecoles');
 const classeRoutes = require('./src/routes/classe');
@@ -60,6 +61,7 @@ app.use("/users", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/ecoles", ecoleRoutes);
 app.use("/auth",AuthRoutes);
+app.use("/eleves",eleveRoutes);
 
 
 
