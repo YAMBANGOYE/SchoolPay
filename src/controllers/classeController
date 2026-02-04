@@ -1,0 +1,67 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const Classe = require('../models/classe');
+const Ecole = require('../models/ecole');
+const upload = require('../middlewares/upload');
+const path = require('path');
+
+
+exports.index = async(req, res) => {
+
+     try {
+        const nbrClasses = await Classe.countDocuments();
+        const Classes = await Classe.find().lean();
+
+        const ClassesFinal = Classes.map(eleve => ({
+            ...eleve,
+      prenomCourt: Classe.libelle ? Classe.libelle.substring(0, 2) : ""
+    }));
+     
+            res.render('eleve/show', { 
+                Classes: ElevesFinal,
+                Classes,
+                title: 'Liste des élèves',
+                classesActive: 'active' ,
+                nbrClasses : nbrClasses
+             });
+        } catch (error) {
+            res.status(400).send(error);
+        }
+};
+
+
+
+exports.create = async(req, res) => {
+     try {
+            const Ecoles = await Ecole.find().lean();
+            
+            res.render('classe/add', {
+                classesActive: 'active',
+                Ecoles,
+                title: 'Creation de classes',
+                }); 
+        } catch (error) {
+            res.status(400).send(error);
+        }
+};
+
+exports.store = async (req, res) => {
+    
+    try {
+        const {
+            ecole, libelle, abreviation, niveau, cycle } = req.body;
+
+        const classeData = { ecole, libelle, abreviation, niveau, cycle };
+
+        // Création utilisateur
+        const classe = new Classe(classeData);
+        await classe.save();
+        console.log('Élève créé avec succès :', classe);
+
+         res.redirect('/classe');
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erreur lors de la création de l'utilisateur");
+    }
+};

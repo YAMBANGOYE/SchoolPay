@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const ClasseSchema = new mongoose.Schema(
   {
-    ecoleId: {
+    ecole: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ecole',
       required: true
@@ -13,15 +13,21 @@ const ClasseSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    abreviation: {
+      type: String,
+      required: true,
+      trim: true
+    },
     niveau: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    cycle: {
       type: String,
       enum: ["Primaire", "Collège", "Lycée"],
       required: true
     },
-    teacherId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'user'
-    }
   },
   { timestamps: true }
 );

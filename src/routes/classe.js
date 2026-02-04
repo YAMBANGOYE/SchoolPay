@@ -1,29 +1,17 @@
 const express = require('express');
-const Classe = require('../models/classe');
+const User = require('../models/user');
+const Ecole = require('../models/ecole');
+const classeController = require('../controllers/classeController');
 const router = new express.Router();
 const path = require('path');
 const app = express();  
+const upload = require('../middlewares/upload');
 
-router.post('/classe', async (req, res, next) => {
-  const classe = new Classe(req.body);
-  try {
 
-    const saveClasse = await classe.save();
-    res.status(201).send(saveClasse);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-router.get('/classe', async (req, res) => {
-  try {
-        const classes = await Classe.find().lean();
- 
-        res.render('test', { classes });
-      //  res.send(users);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
+router.get("/", classeController.index);
+//router.get("/:id/one", eleveController.getOne);
+router.get("/create", classeController.create);
+router.post("/create", classeController.store);
+//router.get('/:id', eleveController.remove);
 
 module.exports = router;

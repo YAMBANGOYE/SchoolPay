@@ -10,6 +10,7 @@ const upload = require('../middlewares/upload');
 exports.index = async(req, res) => {
 
     const nbrEleves = await Eleve.countDocuments();
+    const userConnect = await User.countDocuments();
     const nbrEcoles = await ecole.countDocuments();
     console.log('Nombre d\'élèves :', nbrEleves);
     console.log('Nombre d\'écoles :', nbrEcoles);
@@ -20,6 +21,7 @@ exports.index = async(req, res) => {
         user: req.session.user,
         nbrEleves: nbrEleves,
         nbrEcoles: nbrEcoles,
+        userConnect : userConnect,
         Eleves: eleves,
         title: 'Tableau de bord',
         dashboardActive: 'active'

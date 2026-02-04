@@ -1,0 +1,235 @@
+        <main class="main-content">
+            <!-- Top Navbar -->
+              {{> menu}}
+
+            <!-- Stats Cards -->
+       
+
+            <!-- Content Grid -->
+            <section class="content-grid">
+
+                     
+
+                <!-- Data Table -->
+                <div class="glass-card table-card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">Les élevse enregistre</h2>
+                            <p class="card-subtitle">Les eleves recenment ajouté</p>
+                        </div>
+                        <div class="card-actions">
+                            <a href="/eleves/create">
+                            <button class="card-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Add Eleves
+                            </button>
+                            </a>
+                            <button class="card-btn">Imprimmer</button>
+                                            <select class="settings-select" id="exampleFormControlSelect1" name="niveau">
+                                                <option value="">-- Selectionner le niveau --</option>
+                                                    <option value="6e">6e</option>
+                                                    <option value="5e">5e</option>
+                                                    <option value="4e">4e</option>
+                                                    <option value="3e">3e</option>
+                                                    <option value="2nde">2nde</option>
+                                                    <option value="1ere">1ere</option>
+                                                    <option value="Tle">Tle</option>
+                                            </select>
+                                    
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Tuteur</th>
+                                    <th>Etablissement</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="eleves-body">
+                                <!-- les couleurs du status change-->
+                                {{#each Classes}}
+                                 <tr data-ecole="{{ecole.libelle}}">
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{libelle}}</span><span class="table-user-email">{{responsable.email}}</span></div></div></td>
+                                    <td>{{prenom}}</td>
+                                    <td>{{abreviations}}</td>
+                                    <td>{{ecole.libelle}}</td>
+                                    <td><span class="status-badge completed">{{enligne}}</span></td>
+                                    <td>
+                                      <div class="navbar-right">
+                                        <a href="/classe/{{_id}}/one">
+                                        <button class="nav-btn">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                        </button>
+                                        </a>
+                                        <button class="nav-btn" id="theme-toggle" title="Toggle Light/Dark Mode">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+                                            <path d="M12 20h9"/>
+                                            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                                            </svg>
+                                            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                            </svg>
+                                        </button>
+                                        <a href="/eleves/{{_id}}" class="">
+                                        <button class="nav-btn">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+                                                <polyline points="3 6 5 6 21 6"/>
+                                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                                <path d="M10 11v6"/>
+                                                <path d="M14 11v6"/>
+                                                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                                            </svg>
+                                            
+                                        </button>
+                                        
+                                        </a>
+                                         
+                                    </div>
+                                           
+                                    </td>
+                                </tr>
+                                {{/each}}
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Grid -->
+            <section class="bottom-grid">
+                <!-- Calendar Widget -->
+                <div class="glass-card">
+                    <div class="calendar-header">
+                        <h2 class="card-title">January 2025</h2>
+                        <div class="calendar-nav">
+                            <button class="calendar-nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                            <button class="calendar-nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <span class="calendar-day-name">Sun</span><span class="calendar-day-name">Mon</span><span class="calendar-day-name">Tue</span><span class="calendar-day-name">Wed</span><span class="calendar-day-name">Thu</span><span class="calendar-day-name">Fri</span><span class="calendar-day-name">Sat</span>
+                        <span class="calendar-day other-month">29</span><span class="calendar-day other-month">30</span><span class="calendar-day other-month">31</span><span class="calendar-day today">1</span><span class="calendar-day">2</span><span class="calendar-day">3</span><span class="calendar-day">4</span>
+                        <span class="calendar-day">5</span><span class="calendar-day">6</span><span class="calendar-day">7</span><span class="calendar-day">8</span><span class="calendar-day">9</span><span class="calendar-day">10</span><span class="calendar-day">11</span>
+                        <span class="calendar-day">12</span><span class="calendar-day">13</span><span class="calendar-day">14</span><span class="calendar-day">15</span><span class="calendar-day">16</span><span class="calendar-day">17</span><span class="calendar-day">18</span>
+                        <span class="calendar-day">19</span><span class="calendar-day">20</span><span class="calendar-day">21</span><span class="calendar-day">22</span><span class="calendar-day">23</span><span class="calendar-day">24</span><span class="calendar-day">25</span>
+                        <span class="calendar-day">26</span><span class="calendar-day">27</span><span class="calendar-day">28</span><span class="calendar-day">29</span><span class="calendar-day">30</span><span class="calendar-day">31</span><span class="calendar-day other-month">1</span>
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">Etats des comptes</h2>
+                            <p class="card-subtitle">validité des comptes</p>
+                        </div>
+                    </div>
+                    <div class="donut-container">
+                        <div class="donut-chart">
+                            <svg width="140" height="140" viewBox="0 0 140 140">
+                                <circle class="donut-bg" cx="70" cy="70" r="54"/>
+                                <circle class="donut-segment" cx="70" cy="70" r="54" stroke="var(--emerald-light)" stroke-dasharray="169.6 339.3" stroke-dashoffset="0"/>
+                                <circle class="donut-segment" cx="70" cy="70" r="54" stroke="var(--gold)" stroke-dasharray="101.8 339.3" stroke-dashoffset="-169.6"/>
+                                <circle class="donut-segment" cx="70" cy="70" r="54" stroke="var(--coral)" stroke-dasharray="67.9 339.3" stroke-dashoffset="-271.4"/>
+                            </svg>
+                            <div class="donut-center">
+                                <div class="donut-value">{{nbrClasses}}</div>
+                                <div class="donut-label">Visitors</div>
+                            </div>
+                        </div>
+                        <div class="donut-legend">
+                            <div class="legend-item"><span class="legend-color cyan"></span><span>Comptes conforme (50%)</span></div>
+                            <div class="legend-item"><span class="legend-color magenta"></span><span>Compte incomplet (30%)</span></div>
+                            <div class="legend-item"><span class="legend-color purple"></span><span>Comptes sans responsable (20%)</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="glass-card progress-card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">Project Progress</h2>
+                            <p class="card-subtitle">Current sprint status</p>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-label">UI Design</span><span class="progress-value">85%</span></div>
+                        <div class="progress-bar"><div class="progress-fill cyan" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-label">Backend API</span><span class="progress-value">62%</span></div>
+                        <div class="progress-bar"><div class="progress-fill magenta" style="width: 62%;"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-label">Testing</span><span class="progress-value">45%</span></div>
+                        <div class="progress-bar"><div class="progress-fill purple" style="width: 45%;"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span class="progress-label">Documentation</span><span class="progress-value">28%</span></div>
+                        <div class="progress-bar"><div class="progress-fill cyan" style="width: 28%;"></div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+  function deleteEleve(id) {
+    if (!confirm('Supprimer cet élève ?')) return;
+
+    fetch(`/eleves/${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.ok ? location.reload() : alert('Erreur'))
+  }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const selectEcole = document.getElementById("ecole");
+  const tbody = document.getElementById("eleves-body");
+
+  function trierEleves() {
+    const ecoleChoisie = selectEcole.value;
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+
+    // On trie d'abord par texte de la colonne "Etablissement"
+    rows.sort((a, b) => {
+      const ecoleA = a.querySelector("td:nth-child(4)").textContent.trim().toLowerCase();
+      const ecoleB = b.querySelector("td:nth-child(4)").textContent.trim().toLowerCase();
+
+      return ecoleA.localeCompare(ecoleB);
+    });
+
+    // Si une école est sélectionnée, on ne garde que ses lignes visibles
+    rows.forEach(row => {
+      if (!ecoleChoisie || row.dataset.ecole === ecoleChoisie) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+
+    // Réinjecte toutes les lignes triées
+    tbody.innerHTML = "";
+    rows.forEach(row => tbody.appendChild(row));
+  }
+
+  // Tri initial au chargement
+  trierEleves();
+
+  // Tri + filtrage à chaque changement de select
+  selectEcole.addEventListener("change", trierEleves);
+});
+</script>

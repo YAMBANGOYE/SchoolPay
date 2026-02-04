@@ -62,6 +62,8 @@ app.use("/admin", adminRoutes);
 app.use("/ecoles", ecoleRoutes);
 app.use("/auth",AuthRoutes);
 app.use("/eleves",eleveRoutes);
+app.use("/classes",classeRoutes);
+
 
 
 
