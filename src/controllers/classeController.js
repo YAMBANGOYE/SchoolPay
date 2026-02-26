@@ -11,6 +11,7 @@ exports.index = async(req, res) => {
 
      try {
         const nbrClasses = await Classe.countDocuments();
+<<<<<<< HEAD
         
         const Ecoles = await Ecole.find().lean();
 
@@ -29,6 +30,15 @@ exports.index = async(req, res) => {
         const ClassesFinal = Classes.map(classe => ({
             ...classe,
       prenomCourt: classe.libelle ? classe.libelle.substring(0, 2) : ""
+=======
+        //const Classes = await Classe.find().lean();
+        const Classes = await Classe.find().populate("ecole").lean();
+        const Ecoles = await Ecole.find().lean();
+
+        const ClassesFinal = Classes.map(eleve => ({
+            ...eleve,
+      prenomCourt: Classe.libelle ? Classe.libelle.substring(0, 2) : ""
+>>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
     }));
      
             res.render('classe/show', { 
@@ -106,16 +116,27 @@ exports.store = async (req, res) => {
     
     try {
         const {
+<<<<<<< HEAD
              libelle, abreviation, niveau, cycle } = req.body;
 
         const classeData = {  libelle, abreviation, niveau, cycle };
           classeData.ecole = req.session.userecole; // Associer la classe à une école
+=======
+            ecole, libelle, abreviation, niveau, cycle } = req.body;
+
+        const classeData = { ecole, libelle, abreviation, niveau, cycle };
+
+>>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
         // Création utilisateur
         const classe = new Classe(classeData);
         await classe.save();
         console.log('Élève créé avec succès :', classe);
 
+<<<<<<< HEAD
          res.redirect('/classes');
+=======
+         res.redirect('/classe');
+>>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
 
     } catch (error) {
         console.error(error);

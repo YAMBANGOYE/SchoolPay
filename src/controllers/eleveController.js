@@ -88,10 +88,17 @@ exports.store = async (req, res) => {
         await eleve.save();
         console.log('Élève créé avec succès :', eleve);
 
+<<<<<<< HEAD
         // Création activité
         await Activite.create({
             user: req.session.userId, // ou req.user._id si connecté
             ecole: req.session.userecole,
+=======
+        // 🔥 Création activité
+        await Activite.create({
+            user: req.session.userId, // ou req.user._id si connecté
+            ecole: req.session.userecoles,
+>>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
             type: "ELEVE_AJOUTE",
             message: `Nouvel élève ajouté : ${prenom} ${nom}`,
             metadata: {

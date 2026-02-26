@@ -72,7 +72,10 @@ app.use((req, res, next) => {
   res.locals.currentStatus = req.session.userstatus || null;
   res.locals.currentPhoto = req.session.userphoto || null;
   res.locals.currentEcole = req.session.userecole || null;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
   next();
 });
 

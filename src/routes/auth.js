@@ -46,6 +46,7 @@ router.post('/login', async (req, res) => {
   req.session.username = user.username;
   req.session.userphoto = user.photo;
   req.session.userstatus = user.status;
+<<<<<<< HEAD
   req.session.userecole = user.ecole ? user.ecole.toString() : null;
 
   formatDateSmart
@@ -60,6 +61,11 @@ if (user.status === 'superadmin') {
 } else {
   return res.redirect('/auth/login');
 }
+=======
+  req.session.userecoles = user.ecoles;
+  
+console.log('Utilisateur connecté :', user.username, 'avec le rôle :', user.status);  
+>>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
 
   res.redirect('/admin');
 });
