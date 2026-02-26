@@ -14,19 +14,23 @@ exports.login = (req, res) => {
     });
 };
 
-exports.register = (req, res) => {
+exports.register = async(req, res) => {
+
+    const ecoles = await ecole.find().lean();
 
     res.render("user/add", {
-      Title: "Connection"
+      Title: "Connection",
+      ecoles
     });
 };
  
 exports.show = async (req, res) => {
     //chercher utilisateur en ligne
-  //  const userenligne = await Eleve.findOne({_id: req.params.id}).countDocuments();
+    //const userenligne = await Eleve.findOne({_id: req.params.id}).countDocuments();
 
     const nbrUser = await User.countDocuments();
     const users = await  User.find().lean();
+
  
     res.render("user/usershow", {
       Title: "Connection",
@@ -61,7 +65,8 @@ exports.store = async (req, res) => {
             email, 
             telephone,
             password,
-            status
+            status,
+            ecole
          } = req.body;
         const user = new User({ 
             nom,
@@ -70,7 +75,8 @@ exports.store = async (req, res) => {
             email, 
             telephone,
             status,
-            password
+            password,
+            ecole
         });
 
          if (req.file) {

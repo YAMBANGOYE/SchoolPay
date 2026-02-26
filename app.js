@@ -50,9 +50,11 @@ app.use(express.json());
 
 // Rendre l'utilisateur disponible dans toutes les vues
 app.use((req, res, next) => {
+  res.locals.showMenu = true; // Par défaut, afficher le menu
   res.locals.currentUser = req.session.username || null;
   res.locals.currentStatus = req.session.userstatus || null;
   res.locals.currentPhoto = req.session.userphoto || null;
+  res.locals.currentEcole = req.session.userecole || null;
   next();
 });
 

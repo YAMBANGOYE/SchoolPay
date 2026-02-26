@@ -36,10 +36,10 @@ const userSchema = new mongoose.Schema({
   photo: { 
     type: String 
   },
-  user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
+  ecole: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Ecole', 
+    required: false 
       },
   password: { 
     type: String, 

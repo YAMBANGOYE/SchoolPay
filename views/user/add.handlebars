@@ -75,6 +75,16 @@
                                     <label>Passwors</label>
                                     <input type="password" placeholder="" name="password">
                                 </div>
+                               <div class="form-group-settings">
+                                     <label for="exampleFormControlSelect1" class="form-label">Ecole</label>
+                                            <select class="settings-select" id="exampleFormControlSelect1" name="ecole">
+                                                <option value="">-- Selectionner un ecole --</option>
+                                               {{#each ecoles}}
+                                                    <option value="{{_id}}">{{libelle}}</option>
+                                                {{/each}}
+
+                                            </select>
+                                </div>
                             </div>
                         </div>
 

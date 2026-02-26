@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
 
 // Inscription
 router.get('/login', (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login',{ showMenu: false });
 });
 
 
@@ -45,9 +45,10 @@ router.post('/login', async (req, res) => {
   req.session.userId = user._id;
   req.session.username = user.username;
   req.session.userphoto = user.photo;
-  req.session.uersstatus = user.status;
+  req.session.userstatus = user.status;
+  req.session.userecoles = user.ecoles;
   
-  console.log(user);
+console.log('Utilisateur connecté :', user.username, 'avec le rôle :', user.status);  
 
   res.redirect('/admin');
 });
