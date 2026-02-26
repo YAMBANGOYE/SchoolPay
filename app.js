@@ -11,6 +11,12 @@ const classeRoutes = require('./src/routes/classe');
 const AuthRoutes = require('./src/routes/auth');
 const { engine } = require("express-handlebars");
 const mongoose = require('mongoose');
+const dayjs = require('dayjs');
+const relativeTime = require('dayjs/plugin/relativeTime');
+require('dayjs/locale/fr'); // Français
+
+dayjs.extend(relativeTime);
+dayjs.locale('fr'); // mettre le français par défaut
 
 const express = require('express');
 const app = express();
@@ -36,7 +42,18 @@ app.use(session({
 }));
 
 // Handlebars
-app.engine('handlebars', engine());
+app.engine('handlebars', engine({
+  helpers: {
+  formatDateRelative: function(date) {
+    const d = dayjs(date);
+    if (d.isSame(dayjs(), 'day')) {
+      return d.fromNow(); // "il y a 5 minutes"
+    } else {
+      return d.format('DD/MM/YYYY'); // "25/02/2026"
+    }
+  }
+}
+}));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname,"views"));
 
@@ -55,6 +72,7 @@ app.use((req, res, next) => {
   res.locals.currentStatus = req.session.userstatus || null;
   res.locals.currentPhoto = req.session.userphoto || null;
   res.locals.currentEcole = req.session.userecole || null;
+
   next();
 });
 

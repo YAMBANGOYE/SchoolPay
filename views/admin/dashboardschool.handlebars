@@ -44,8 +44,8 @@
                 <div class="glass-card glass-card-3d stat-card">
                     <div class="stat-card-inner">
                         <div class="stat-info">
-                            <h3>Nombre d'ecoles</h3>
-                            <div class="stat-value">{{nbrEcoles}}</div>
+                            <h3>Nombre de classes</h3>
+                            <div class="stat-value">{{nbrClasses}}</div>
                             <span class="stat-change negative">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg>
                                 -3.1%
@@ -129,13 +129,15 @@
                         </div>
                     </div>
                     <div class="activity-list">
+                        {{#each Activites}}
                         <div class="activity-item">
                             <div class="activity-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">JD</div>
                             <div class="activity-content">
-                                <p class="activity-text"><strong>John Doe</strong> purchased Premium Plan</p>
-                                <span class="activity-time">2 minutes ago</span>
+                                <p class="activity-text"><strong>{{this.user.username}} -</strong> {{this.message}}</p>
+                                <span class="activity-time">{{formatDateRelative this.createdAt}}  </span>
                             </div>
                         </div>
+                        {{/each}}
                         <div class="activity-item">
                             <div class="activity-avatar" style="background: linear-gradient(135deg, var(--gold), var(--amber));">AS</div>
                             <div class="activity-content">

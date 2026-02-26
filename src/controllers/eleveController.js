@@ -88,10 +88,10 @@ exports.store = async (req, res) => {
         await eleve.save();
         console.log('Élève créé avec succès :', eleve);
 
-        // 🔥 Création activité
+        // Création activité
         await Activite.create({
             user: req.session.userId, // ou req.user._id si connecté
-            ecole: req.session.userecoles,
+            ecole: req.session.userecole,
             type: "ELEVE_AJOUTE",
             message: `Nouvel élève ajouté : ${prenom} ${nom}`,
             metadata: {
@@ -130,6 +130,18 @@ exports.remove = async (req, res) => {
       fs.unlinkSync(photoPath);
     }
   }
+
+          // 🔥 Création activité
+        await Activite.create({
+            user: req.session.userId, // ou req.user._id si connecté
+            ecole: req.session.userecole,
+            type: "ELEVE_SUPPRIME",
+            message: `Élève supprimé : ${eleve.prenom} ${eleve.nom}`,
+            metadata: {
+                eleveId: eleve._id,
+                classe: eleve.classe
+            }
+        });
 
   // 4️⃣ Supprimer l’élève
   await Eleve.findByIdAndDelete(id);

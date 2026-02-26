@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Eleve = require('../models/eleve');
 const User = require('../models/user');
 const ecole = require('../models/ecole');
+const Activite = require('../models/activite');
+const Classe = require('../models/classe');
 const QRCode = require('qrcode');
 const upload = require('../middlewares/upload');
 
@@ -12,8 +14,7 @@ exports.indexsuperadmin = async(req, res) => {
     const nbrEleves = await Eleve.countDocuments();
     const userConnect = await User.countDocuments();
     const nbrEcoles = await ecole.countDocuments();
-    console.log('Nombre d\'élèves :', nbrEleves);
-    console.log('Nombre d\'écoles :', nbrEcoles);
+   
     const eleves = await Eleve.find().populate("ecole").lean();
    //const eleves = await Eleve.find({ ecole: { $exists: true } }).populate('ecole');
     console.log(eleves);
@@ -30,20 +31,23 @@ exports.indexsuperadmin = async(req, res) => {
 
 exports.indexadminschool = async(req, res) => {
 
-    const nbrEleves = await Eleve.countDocuments();
+    const nbrEleves = await Eleve.countDocuments({ 
+  ecole: req.session.userecole 
+});
     const userConnect = await User.countDocuments();
-    const nbrEcoles = await ecole.countDocuments();
-    console.log('Nombre d\'élèves :', nbrEleves);
-    console.log('Nombre d\'écoles :', nbrEcoles);
+    const nbrClasses = await Classe.countDocuments({ ecole: req.session.userecole });
+    const activites = await Activite.find({ ecole: req.session.userecole }).populate('user').sort({ createdAt: -1 }).lean();
+
     const eleves = await Eleve.find().populate("ecole").lean();
    //const eleves = await Eleve.find({ ecole: { $exists: true } }).populate('ecole');
     console.log(eleves);
     res.render('admin/dashboardschool', {
         user: req.session.user,
         nbrEleves: nbrEleves,
-        nbrEcoles: nbrEcoles,
+        nbrClasses: nbrClasses,
         userConnect : userConnect,
         Eleves: eleves,
+        Activites: activites,
         title: 'Tableau de bord',
         dashboardActive: 'active'
     });

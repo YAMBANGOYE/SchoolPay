@@ -11,13 +11,24 @@ exports.index = async(req, res) => {
 
      try {
         const nbrClasses = await Classe.countDocuments();
-        //const Classes = await Classe.find().lean();
-        const Classes = await Classe.find().populate("ecole").lean();
+        
         const Ecoles = await Ecole.find().lean();
 
-        const ClassesFinal = Classes.map(eleve => ({
-            ...eleve,
-      prenomCourt: Classe.libelle ? Classe.libelle.substring(0, 2) : ""
+        let filter = {};
+
+    if (req.session.userstatus === "admin") {
+      filter = { ecole: req.session.userecole };
+    }
+
+    // Si superadmin → filter reste vide → il voit tout
+
+    const Classes = await Classe.find(filter)
+      .populate("ecole")
+      .lean();
+
+        const ClassesFinal = Classes.map(classe => ({
+            ...classe,
+      prenomCourt: classe.libelle ? classe.libelle.substring(0, 2) : ""
     }));
      
             res.render('classe/show', { 
@@ -95,16 +106,16 @@ exports.store = async (req, res) => {
     
     try {
         const {
-            ecole, libelle, abreviation, niveau, cycle } = req.body;
+             libelle, abreviation, niveau, cycle } = req.body;
 
-        const classeData = { ecole, libelle, abreviation, niveau, cycle };
-
+        const classeData = {  libelle, abreviation, niveau, cycle };
+          classeData.ecole = req.session.userecole; // Associer la classe à une école
         // Création utilisateur
         const classe = new Classe(classeData);
         await classe.save();
         console.log('Élève créé avec succès :', classe);
 
-         res.redirect('/classe');
+         res.redirect('/classes');
 
     } catch (error) {
         console.error(error);

@@ -46,9 +46,20 @@ router.post('/login', async (req, res) => {
   req.session.username = user.username;
   req.session.userphoto = user.photo;
   req.session.userstatus = user.status;
-  req.session.userecoles = user.ecoles;
+  req.session.userecole = user.ecole ? user.ecole.toString() : null;
+
+  formatDateSmart
+
   
-console.log('Utilisateur connecté :', user.username, 'avec le rôle :', user.status);  
+console.log('Utilisateur connecté :', user.username, 'avec le rôle :', user.ecole);  
+
+if (user.status === 'superadmin') {
+  return res.redirect('/admin/superadmin');
+} if (user.status === 'admin') {
+  return res.redirect('/admin/adminschool');
+} else {
+  return res.redirect('/auth/login');
+}
 
   res.redirect('/admin');
 });
