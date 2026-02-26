@@ -11,7 +11,6 @@ const Eleveschema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User' 
     },
-   
     nom: { 
         type: String, 
         required: true 
@@ -40,6 +39,11 @@ const Eleveschema = new mongoose.Schema({
     },
     datenaissance: { 
         type: String,
+        required: true 
+    },
+    classe: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Classe',
         required: true 
     },
     qrCode: String,       

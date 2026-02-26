@@ -7,7 +7,8 @@ const path = require('path');
 const app = express();  
 const upload = require('../middlewares/upload');
 
-router.get("/", adminController.index);
+router.get("/superadmin", adminController.indexsuperadmin);
+router.get("/adminschool", adminController.indexadminschool);
 
 
 module.exports = router;

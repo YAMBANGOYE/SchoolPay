@@ -7,7 +7,7 @@ const QRCode = require('qrcode');
 const upload = require('../middlewares/upload');
 
 
-exports.index = async(req, res) => {
+exports.indexsuperadmin = async(req, res) => {
 
     const nbrEleves = await Eleve.countDocuments();
     const userConnect = await User.countDocuments();
@@ -18,6 +18,27 @@ exports.index = async(req, res) => {
    //const eleves = await Eleve.find({ ecole: { $exists: true } }).populate('ecole');
     console.log(eleves);
     res.render('ecole/dashboard', {
+        user: req.session.user,
+        nbrEleves: nbrEleves,
+        nbrEcoles: nbrEcoles,
+        userConnect : userConnect,
+        Eleves: eleves,
+        title: 'Tableau de bord',
+        dashboardActive: 'active'
+    });
+};
+
+exports.indexadminschool = async(req, res) => {
+
+    const nbrEleves = await Eleve.countDocuments();
+    const userConnect = await User.countDocuments();
+    const nbrEcoles = await ecole.countDocuments();
+    console.log('Nombre d\'élèves :', nbrEleves);
+    console.log('Nombre d\'écoles :', nbrEcoles);
+    const eleves = await Eleve.find().populate("ecole").lean();
+   //const eleves = await Eleve.find({ ecole: { $exists: true } }).populate('ecole');
+    console.log(eleves);
+    res.render('admin/dashboardschool', {
         user: req.session.user,
         nbrEleves: nbrEleves,
         nbrEcoles: nbrEcoles,

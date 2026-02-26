@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Eleve = require('../models/eleve');
 const User = require('../models/user');
 const Ecole = require('../models/ecole');
+const Classe = require('../models/classe');
+const Activite = require('../models/activite');
 const QRCode = require('qrcode');
 const upload = require('../middlewares/upload');
 const path = require('path');
@@ -49,10 +51,12 @@ exports.create = async(req, res) => {
      try {
             const Users = await User.find().lean();
             const Ecoles = await Ecole.find().lean();
-            console.log(Users);
+            const Classes = await Classe.find().lean();
+            
             res.render('eleve/add', {
                 elevesActive: 'active',
                 Ecoles,
+                Classes,
                 title: 'Liste des élèves',
                 Users}); 
         } catch (error) {
@@ -64,10 +68,10 @@ exports.store = async (req, res) => {
     console.log(req.body);
     try {
         const {
-            nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole
+            nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole, classe
         } = req.body;
 
-        const userData = { nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole };
+        const userData = { nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole, classe };
 
         // Génération du QR code
         const qrText = `ELEVE-${telephone}-${Date.now()}`;
@@ -83,6 +87,18 @@ exports.store = async (req, res) => {
         const eleve = new Eleve(userData);
         await eleve.save();
         console.log('Élève créé avec succès :', eleve);
+
+        // 🔥 Création activité
+        await Activite.create({
+            user: req.session.userId, // ou req.user._id si connecté
+            ecole: req.session.userecoles,
+            type: "ELEVE_AJOUTE",
+            message: `Nouvel élève ajouté : ${prenom} ${nom}`,
+            metadata: {
+                eleveId: eleve._id,
+                classe: classe
+            }
+        });
 
          res.redirect('/eleves');
 

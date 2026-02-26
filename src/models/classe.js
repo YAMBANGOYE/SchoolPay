@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const ClasseSchema = new mongoose.Schema(
   {
     ecole: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ecole',
-      required: true
-    },
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Ecole',
+  required: true
+},
     libelle: {
       type: String,
       required: true,
