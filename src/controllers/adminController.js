@@ -31,7 +31,6 @@ exports.indexsuperadmin = async(req, res) => {
 
 exports.indexadminschool = async(req, res) => {
 
-<<<<<<< HEAD
     const nbrEleves = await Eleve.countDocuments({ 
   ecole: req.session.userecole 
 });
@@ -39,29 +38,16 @@ exports.indexadminschool = async(req, res) => {
     const nbrClasses = await Classe.countDocuments({ ecole: req.session.userecole });
     const activites = await Activite.find({ ecole: req.session.userecole }).populate('user').sort({ createdAt: -1 }).lean();
 
-=======
-    const nbrEleves = await Eleve.countDocuments();
-    const userConnect = await User.countDocuments();
-    const nbrEcoles = await ecole.countDocuments();
-    console.log('Nombre d\'élèves :', nbrEleves);
-    console.log('Nombre d\'écoles :', nbrEcoles);
->>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
     const eleves = await Eleve.find().populate("ecole").lean();
    //const eleves = await Eleve.find({ ecole: { $exists: true } }).populate('ecole');
     console.log(eleves);
     res.render('admin/dashboardschool', {
         user: req.session.user,
         nbrEleves: nbrEleves,
-<<<<<<< HEAD
         nbrClasses: nbrClasses,
         userConnect : userConnect,
         Eleves: eleves,
         Activites: activites,
-=======
-        nbrEcoles: nbrEcoles,
-        userConnect : userConnect,
-        Eleves: eleves,
->>>>>>> c6d1fe3bc44089a1b93e531bd6092d36f4c60483
         title: 'Tableau de bord',
         dashboardActive: 'active'
     });
