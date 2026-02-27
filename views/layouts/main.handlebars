@@ -38,7 +38,7 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">So</div>
-                <span class="logo-text">Schoolorachoola</span>
+                <span class="logo-text">{{currentEcole}}</span>
             </div>
 
             <ul class="nav-menu">
@@ -104,6 +104,15 @@
                                 Classes
                             </a>
                         </li>
+                         <li class="nav-item">
+                            <a href="/classes" class="nav-link {{classesActive}}">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                <line x1="2" y1="10" x2="22" y2="10"/>
+                                </svg>
+                                Paiements
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="settings.html" class="nav-link {{settingsActive}}" >
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -141,7 +150,7 @@
                         <div class="user-name">
                             
                             {{#if currentUser}}
-                            <strong>{{currentUser}} {{currentEcole}}</strong>
+                            <strong>{{currentUsername}}</strong>
                             {{else}}
                             <p>Non connecté</p>
                             {{/if}}

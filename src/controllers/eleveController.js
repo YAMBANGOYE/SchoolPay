@@ -13,6 +13,7 @@ const fs = require('fs');
 exports.index = async(req, res) => {
 
      try {
+        
         const nbrEleves = await Eleve.countDocuments();
         const Eleves = await Eleve.find().populate("responsable").populate("ecole").lean();
         const Ecoles = await Ecole.find().lean();

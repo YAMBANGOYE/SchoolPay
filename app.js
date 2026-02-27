@@ -70,10 +70,13 @@ app.use(express.json());
 // Rendre l'utilisateur disponible dans toutes les vues
 app.use((req, res, next) => {
   res.locals.showMenu = true; // Par défaut, afficher le menu
-  res.locals.currentUser = req.session.userId || null;
+  res.locals.currentUser = req.session.userId || null;  
+  res.locals.currentUsername = req.session.username || null; 
   res.locals.currentStatus = req.session.userstatus || null;
   res.locals.currentPhoto = req.session.userphoto || null;
-  res.locals.currentEcole = req.session.userecole || null;
+
+  res.locals.currentEcole = req.session.userecoleLibelle || null;
+  res.locals.currentEcoleId = req.session.userecoleId || null;
 
   // Flags pour Handlebars
   res.locals.isSuperAdmin = req.session.userstatus === 'superadmin';

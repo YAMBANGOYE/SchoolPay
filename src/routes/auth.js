@@ -30,7 +30,7 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body; // ✅ déclaration ici
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate('ecole');
 
   if (!user) {
     return res.render('auth/login', { error: 'Utilisateur introuvable' });
@@ -46,12 +46,10 @@ router.post('/login', async (req, res) => {
   req.session.username = user.username;
   req.session.userphoto = user.photo;
   req.session.userstatus = user.status;
-  req.session.userecole = user.ecole ? user.ecole.toString() : null;
 
-  formatDateSmart
+req.session.userecoleId = user.ecole ? user.ecole._id : null;
+req.session.userecoleLibelle = user.ecole ? user.ecole.libelle : null;
 
-  
-console.log('Utilisateur connecté :', user.username, 'avec le rôle :', user.ecole);  
 
 if (user.status === 'superadmin') {
   return res.redirect('/admin/superadmin');

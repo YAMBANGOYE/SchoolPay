@@ -32,11 +32,11 @@ exports.indexsuperadmin = async(req, res) => {
 exports.indexadminschool = async(req, res) => {
 
     const nbrEleves = await Eleve.countDocuments({ 
-  ecole: req.session.userecole 
+  ecole: req.session.userecoleId
 });
     const userConnect = await User.countDocuments();
-    const nbrClasses = await Classe.countDocuments({ ecole: req.session.userecole });
-    const activites = await Activite.find({ ecole: req.session.userecole }).populate('user').sort({ createdAt: -1 }).lean();
+    const nbrClasses = await Classe.countDocuments({ ecole: req.session.userecoleId });
+    const activites = await Activite.find({ ecole: req.session.userecoleId }).populate('user').sort({ createdAt: -1 }).lean();
 
     const eleves = await Eleve.find().populate("ecole").lean();
    //const eleves = await Eleve.find({ ecole: { $exists: true } }).populate('ecole');
