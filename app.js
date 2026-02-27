@@ -14,6 +14,8 @@ const mongoose = require('mongoose');
 const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
 require('dayjs/locale/fr'); // Français
+const http = require('http');
+const { Server } = require('socket.io');
 
 dayjs.extend(relativeTime);
 dayjs.locale('fr'); // mettre le français par défaut
@@ -68,11 +70,15 @@ app.use(express.json());
 // Rendre l'utilisateur disponible dans toutes les vues
 app.use((req, res, next) => {
   res.locals.showMenu = true; // Par défaut, afficher le menu
-  res.locals.currentUser = req.session.username || null;
+  res.locals.currentUser = req.session.userId || null;
   res.locals.currentStatus = req.session.userstatus || null;
   res.locals.currentPhoto = req.session.userphoto || null;
   res.locals.currentEcole = req.session.userecole || null;
 
+  // Flags pour Handlebars
+  res.locals.isSuperAdmin = req.session.userstatus === 'superadmin';
+  res.locals.isAdmin = req.session.userstatus === 'admin';
+  res.locals.isResponsable = req.session.userstatus === 'responsable';
   next();
 });
 
@@ -85,11 +91,37 @@ app.use("/eleves",eleveRoutes);
 app.use("/classes",classeRoutes);
 
 
+const server = http.createServer(app);
+const io = new Server(server);
 
+io.on("connection", (socket) => {
 
+  socket.on("user_connected", async (userId) => {
 
+    if (!mongoose.Types.ObjectId.isValid(userId)) return;
 
-// Start server
-app.listen(port, () => {
+    socket.userId = userId;
+
+    await User.findByIdAndUpdate(userId, {
+      enligne: true
+    });
+
+  });
+
+  socket.on("disconnect", async () => {
+
+    if (socket.userId) {
+      await User.findByIdAndUpdate(socket.userId, {
+        enligne: false,
+        lastSeen: new Date()
+      });
+    }
+
+  });
+
+});
+
+// Start server 
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

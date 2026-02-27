@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
     required: true, 
     default: false
   },
+  lastSeen: {
+  type: Date
+},
   status: { 
     type: String,
       enum: ["superadmin", "admin", "redponsable"],

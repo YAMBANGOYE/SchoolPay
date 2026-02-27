@@ -150,12 +150,23 @@
                             <tbody>
                                 {{#each users}}
                                 <tr>
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">Br</div><div class="table-user-info"><span class="table-user-name">{{ nom}} </span><span class="table-user-email">{{prenom}}</span></div></div></td>
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">Br</div><div class="table-user-info"><span class="table-user-name">
+                                        {{this.nom}} {{this.prenom}}
+
+    
+                                        
+                                         </span><span class="table-user-email">{{prenom}}</span></div></div></td>
                                     <td>{{ status }}</td>
                                     <td>{{email}}</td>
                                     <td>{{ datecreation }}</td>
-                                    <td><span class="status-badge completed">En ligne</span></td>
-                                    <td>2 mins ago</td>
+                                    <td>
+                                        {{#if this.enligne}}
+                                        <span class="status-badge completed">En ligne</span>
+                                        {{else}}
+                                        <span class="status-badge processing">Hors ligne</span>
+                                        {{/if}}
+                                    </td>
+                                    <td>{{formatDateRelative this.lastSeen}}</td>
                                     <td>
                                         <div class="navbar-right">
                                         <a href="/users/{{_id}}">

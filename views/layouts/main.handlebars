@@ -9,13 +9,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/templatemo-glass-admin-style.css">
-    <!--
 
-TemplateMo 607 Glass Admin
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const userId = "{{currentUser}}";
 
-https://templatemo.com/tm-607-glass-admin
+  if (userId) {
+    socket.emit("user_connected", userId);
 
--->
+    // Ping toutes les 30 secondes
+    setInterval(() => {
+      socket.emit("still_online", userId);
+    }, 30000);
+  }
+</script>
+
 </head>
 <body>
     <!-- Animated Background -->
@@ -29,7 +38,7 @@ https://templatemo.com/tm-607-glass-admin
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">So</div>
-                <span class="logo-text">Schoolora</span>
+                <span class="logo-text">Schoolorachoola</span>
             </div>
 
             <ul class="nav-menu">
@@ -111,13 +120,14 @@ https://templatemo.com/tm-607-glass-admin
                     <span class="nav-section-title">Account</span>
                     <ul>
                         <li class="nav-item">
-                            <a href="login.html" class="nav-link {{activePage}}">
+                            <a href="/auth/logout" class="nav-link {{activePage}}">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                                     <polyline points="16 17 21 12 16 7"/>
                                     <line x1="21" y1="12" x2="9" y2="12"/>
                                 </svg>
                                 Logout
+                          
                             </a>
                         </li>
                     </ul>
