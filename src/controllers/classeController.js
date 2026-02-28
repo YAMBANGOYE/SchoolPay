@@ -4,6 +4,7 @@ const Classe = require('../models/classe');
 const Ecole = require('../models/ecole');
 const Eleve = require('../models/eleve');
 const upload = require('../middlewares/upload');
+const Activite = require('../models/activite');
 const path = require('path');
 
 
@@ -17,7 +18,7 @@ exports.index = async(req, res) => {
         let filter = {};
 
     if (req.session.userstatus === "admin") {
-      filter = { ecole: req.session.userecole };
+      filter = { ecole: req.session.userecoleId };
     }
 
     // Si superadmin → filter reste vide → il voit tout
@@ -109,11 +110,22 @@ exports.store = async (req, res) => {
              libelle, abreviation, niveau, cycle } = req.body;
 
         const classeData = {  libelle, abreviation, niveau, cycle };
-          classeData.ecole = req.session.userecole; // Associer la classe à une école
+          classeData.ecole = req.session.userecoleId; // Associer la classe à une école
         // Création utilisateur
         const classe = new Classe(classeData);
         await classe.save();
-        console.log('Élève créé avec succès :', classe);
+        console.log('Classe créée avec succès :', classe);
+
+         // Création activité
+                await Activite.create({
+                    user: req.session.userId, // ou req.user._id si connecté
+                    ecole: req.session.userecoleId,
+                    type: "CLASSE_CREEE",
+                    message: `Nouvelle classe créée : ${libelle}`,
+                      metadata: {
+                          classeId: classe._id
+                    }
+                });
 
          res.redirect('/classes');
 

@@ -27,3 +27,11 @@ exports.index = async(req, res) => {
             res.status(400).send(error);
         }
 };
+
+exports.config = (req, res) => {
+
+    res.render("ecole/config", {
+      title: "Configuration",
+      configActive: "active"
+    });
+};

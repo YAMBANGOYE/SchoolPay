@@ -92,7 +92,7 @@ exports.store = async (req, res) => {
         // Création activité
         await Activite.create({
             user: req.session.userId, // ou req.user._id si connecté
-            ecole: req.session.userecole,
+            ecole: req.session.userecoleId,
             type: "ELEVE_AJOUTE",
             message: `Nouvel élève ajouté : ${prenom} ${nom}`,
             metadata: {

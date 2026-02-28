@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const Anneeschema = new mongoose.Schema(
+const Annee_scolairechema = new mongoose.Schema(
   {
-    ecoleId: {
+    ecole: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'ecole',
+          ref: 'Ecole',
           required: true
         },
 
@@ -33,4 +33,4 @@ const Anneeschema = new mongoose.Schema(
   }
 )
 
-module.exports = mongoose.model('Ecole', Ecoleschema)
+module.exports = mongoose.model('Annee_scolaire', Annee_scolairechema)
