@@ -16,11 +16,11 @@ const Annee_scolairechema = new mongoose.Schema(
     },
 
     dateDebut: {
-      type: String
+      type: Date
     },
 
     dateFin: {
-      type: String
+      type: Date
     },
 
     active: {

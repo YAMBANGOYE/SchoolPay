@@ -41,11 +41,6 @@ const Eleveschema = new mongoose.Schema({
         type: String,
         required: true 
     },
-    classe: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Classe',
-        required: true 
-    },
     qrCode: String,       
     photo: String
 }, { timestamps: true })

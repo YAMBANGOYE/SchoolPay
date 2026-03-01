@@ -11,5 +11,6 @@ const upload = require('../middlewares/upload');
 
 router.get("/", ecoleController.index);
 router.get("/config", ecoleController.config);
+router.post("/config", ecoleController.storeConfig);
 
 module.exports = router;
