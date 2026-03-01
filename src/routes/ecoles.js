@@ -13,4 +13,5 @@ router.get("/", ecoleController.index);
 router.get("/config", ecoleController.config);
 router.post("/config", ecoleController.storeConfig);
 
+
 module.exports = router;

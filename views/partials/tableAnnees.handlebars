@@ -1,0 +1,24 @@
+<table class="data-table" style="min-width: 100%;">
+  <thead>
+    <tr>
+      <th>Libelle</th>
+      <th>Debut</th>
+      <th>Fin</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each annee_scolaire}}
+    <tr>
+      <td>{{this.libelle}}</td>
+      <td>{{formatDateRelative this.dateDebut}}</td>
+      <td>{{formatDateRelative this.dateFin}}</td>
+      <td><span class="status-badge completed">Active</span></td>
+      <td>
+        <!-- tes boutons ici -->
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
