@@ -9,6 +9,7 @@ const adminRoutes = require('./src/routes/admin');
 const ecoleRoutes = require('./src/routes/ecoles');
 const classeRoutes = require('./src/routes/classe');
 const AuthRoutes = require('./src/routes/auth');
+const PaiementRoutes = require('./src/routes/paiement');
 const inscriptionRoutes = require('./src/routes/inscription');
 const { engine } = require("express-handlebars");
 const mongoose = require('mongoose');
@@ -94,6 +95,7 @@ app.use("/auth",AuthRoutes);
 app.use("/eleves",eleveRoutes);
 app.use("/classes",classeRoutes);
 app.use("/inscriptions", inscriptionRoutes);
+app.use("/paiements", PaiementRoutes);
 
 
 const server = http.createServer(app);

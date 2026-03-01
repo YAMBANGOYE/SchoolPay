@@ -29,37 +29,14 @@
                                 <span class="y-value">0</span>
                             </div>
                             <div class="chart-placeholder">
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">1</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">2</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">3</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">4</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">5</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-gold" style="height: 0px;"></div><span class="chart-label">6</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-gold" style="height: 0px;"></div><span class="chart-label">7</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-gold" style="height: 0px;"></div><span class="chart-label">8</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-gold" style="height: 0px;"></div><span class="chart-label">9</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-gold" style="height: 0px;"></div><span class="chart-label">10</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-coral" style="height: 0px;"></div><span class="chart-label">11</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-coral" style="height: 0px;"></div><span class="chart-label">12</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-coral" style="height: 0px;"></div><span class="chart-label">13</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-coral" style="height: 0px;"></div><span class="chart-label">14</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-coral" style="height: 0px;"></div><span class="chart-label">15</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-teal" style="height: 0px;"></div><span class="chart-label">16</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-teal" style="height: 0px;"></div><span class="chart-label">17</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-teal" style="height: 0px;"></div><span class="chart-label">18</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-teal" style="height: 0px;"></div><span class="chart-label">19</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-teal" style="height: 0px;"></div><span class="chart-label">20</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-amber" style="height: 0px;"></div><span class="chart-label">21</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-amber" style="height: 0px;"></div><span class="chart-label">22</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-amber" style="height: 0px;"></div><span class="chart-label">23</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-amber" style="height: 0px;"></div><span class="chart-label">24</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-amber" style="height: 0px;"></div><span class="chart-label">25</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">26</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">27</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">28</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">29</span></div>
-                                <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 0px;"></div><span class="chart-label">30</span></div>
-                            </div>
+                              
+                                
+                                {{#each inscriptionStats}}
+                                   
+                                    <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: {{this.total}}0px;"></div><span class="chart-label">{{this.day}}</span></div>
+
+                                {{/each}}
+                                 </div>
                         </div>
                     </div>
                 </div>
@@ -147,13 +124,13 @@
                             </thead>
                             <tbody id="eleves-body">
                                 <!-- les couleurs du status change-->
-                                {{#each Eleves}}
-                                 <tr data-ecole="{{ecole.libelle}}">
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{nom}}</span><span class="table-user-email">{{responsable.email}}</span></div></div></td>
-                                    <td>{{prenom}}</td>
-                                    <td>{{responsable.nom}}</td>
-                                    <td>{{ecole.libelle}}</td>
-                                    <td><span class="status-badge completed">{{enligne}}</span></td>
+                                {{#each inscriptions}}
+                                 <tr data-ecole="">
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{this.eleve.prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{this._id}}</span><span class="table-user-email">{{this.responsable.email}}</span></div></div></td>
+                                    <td>{{this.eleve.nom}}</td>
+                                    <td>{{this.classe.libelle}}</td>
+                                    <td>{{this.responsable}}</td>
+                                    <td><span class="status-badge completed">{{formatDateRelative this.createdAt}}</span></td>
                                     <td>
                                       <div class="navbar-right">
                                         <a href="/eleves/{{_id}}/one">

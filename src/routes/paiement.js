@@ -1,18 +1,18 @@
 const express = require('express');
 const User = require('../models/user');
 const Ecole = require('../models/ecole');
-const inscriptionController = require('../controllers/inscriptionController');
+const paiementController = require('../controllers/paiementController');
 const router = new express.Router();
 const app = express();  
 
-router.get("/", inscriptionController.index);
-router.get("/create", inscriptionController.create);
-router.post("/create", inscriptionController.store);
+router.get("/", paiementController.index);
+
 
 /*
 router.get("/:id/one", inscriptionController.getOne);
 
-
+router.get("/create", inscriptionController.create);
+router.post("/create", inscriptionController.store);
 router.get('/:id', inscriptionController.remove);
 */
 module.exports = router;

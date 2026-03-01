@@ -8,8 +8,8 @@ const Inscriptionchema = new mongoose.Schema({
         required: false 
     },
     responsable: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User' 
+         type: String, 
+        required: true 
     },
     eleve: { 
         type: mongoose.Schema.Types.ObjectId, 
@@ -19,7 +19,7 @@ const Inscriptionchema = new mongoose.Schema({
     annee_scolaire: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Annee_scolaire',
-        required: true 
+        required: false 
     },
     classe: { 
         type: mongoose.Schema.Types.ObjectId, 
