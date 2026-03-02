@@ -1,0 +1,75 @@
+ <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+           {{>menu}}
+
+            <!-- Settings Content -->
+         
+                <!-- Settings Navigation -->
+                
+
+                <!-- Settings Content -->
+                <div class="glass-card">
+                    <!-- Profile Tab -->
+                    <form action="/classes/create" method="POST">
+
+                    <div class="settings-tab-content active" id="tab-profile">
+                        <div class="profile-header">
+                           
+                            <div class="profile-info">
+                                
+                                <p></p>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+
+                            <div class="form-grid">
+                                <div class="form-group-settings">
+                                    <label>Libelle</label>
+                                    <input type="text"  name="libelle" placeholder="" >
+                                </div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" style="width: auto;">Save Changes</button>
+                            <button class="btn btn-secondary" style="width: auto;">Cancel</button>
+                        </div>
+                    </div>
+            </form>
+                    <!-- Security Tab -->
+                    
+                    <!-- Notifications Tab -->
+                    
+                    <!-- Billing Tab -->
+                    <div class="settings-tab-content" id="tab-billing">
+                        
+
+                        
+                    
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+<script>
+    const input = document.getElementById("fileInput");
+    const preview = document.getElementById("preview");
+
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("Veuillez sélectionner une image");
+        return;
+      }
+
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = "block";
+
+      preview.onload = () => {
+        URL.revokeObjectURL(preview.src);
+      };
+    });
+  </script>
+

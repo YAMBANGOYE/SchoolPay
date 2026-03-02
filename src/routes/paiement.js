@@ -6,7 +6,12 @@ const router = new express.Router();
 const app = express();  
 
 router.get("/", paiementController.index);
-
+router.get("/categorie", paiementController.categorie);
+router.post("/categorie", paiementController.storecategorie);
+router.get("/paiement", paiementController.paiement);
+router.post("/paiement", paiementController.creerFacture); 
+router.get('/print/:id', paiementController.printFacture);
+//router.post("/tarifs", paiementController.store);
 
 /*
 router.get("/:id/one", inscriptionController.getOne);

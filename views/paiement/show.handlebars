@@ -38,10 +38,10 @@
             <!-- Stats Cards -->
             <section class="stats-grid">
                <div class="search-box">
-                    <a href="https://templatemo.com" target="_blank" rel="nofollow" class="btn btn-primary" style="padding: 10px 20px;">Créer un tarif</a>
+                    <a href="/paiements/categorie" rel="nofollow" class="btn btn-primary" style="padding: 10px 20px;">Créer une catégorie de paiement</a>
                 </div>
                  <div class="search-box">
-                    <a href="https://templatemo.com" target="_blank" rel="nofollow" class="btn btn-primary" style="padding: 10px 20px;">Effectuer un paiement</a>
+                    <a href="/paiements/effectuer" target="_blank" rel="nofollow" class="btn btn-primary" style="padding: 10px 20px;">Effectuer un paiement</a>
                 </div>
                  <div class="search-box">
                     <a href="https://templatemo.com" target="_blank" rel="nofollow" class="btn btn-primary" style="padding: 10px 20px;">#####</a>
@@ -57,8 +57,8 @@
                 <div class="glass-card table-card" style="grid-column: span 1;">
                     <div class="card-header">
                         <div>
-                            <h2 class="card-title">All Users</h2>
-                            <p class="card-subtitle">Manage your user base</p>
+                            <h2 class="card-title">Les paiements du jours</h2>
+                            <p class="card-subtitle">Vous avez effectué 3 paiements aujourd'hui</p>
                         </div>
                         <div class="card-actions">
                             <button class="card-btn">
@@ -74,35 +74,29 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Nom et prenom</th>
-                                    <th>Role</th>
-                                    <th>mail</th>
-                                    <th>Date de creation</th>
-                                    <th>Presence</th>
-                                    <th>Derniere Active</th>
+                                    <th>Facture</th>
+                                    <th>Montant Payé</th>
+                                    <th>Date</th>
+                                    <th>Eleve</th>
+                                    <th>Responsable</th>
+                                    
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each users}}
+                                {{#each Factures}}
                                 <tr>
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">Br</div><div class="table-user-info"><span class="table-user-name">
-                                        {{this.nom}} {{this.prenom}}
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">#id</div><div class="table-user-info"><span class="table-user-name">
+                                        {{this.numeroFacture}}
 
     
                                         
                                          </span><span class="table-user-email">{{prenom}}</span></div></div></td>
-                                    <td>{{ status }}</td>
-                                    <td>{{email}}</td>
-                                    <td>{{ datecreation }}</td>
-                                    <td>
-                                        {{#if this.enligne}}
-                                        <span class="status-badge completed">En ligne</span>
-                                        {{else}}
-                                        <span class="status-badge processing">Hors ligne</span>
-                                        {{/if}}
-                                    </td>
-                                    <td>{{formatDateRelative this.lastSeen}}</td>
+                                    <td>{{ this.montantPaye }} F CFA</td>
+                                    <td>{{formatDateRelative this.createdAt}}</td>
+                                    <td>{{this.inscription.eleve.nom}}</td>
+                                  
+                                    <td>{{formatDateRelative this.createdAt}}</td>
                                     <td>
                                         <div class="navbar-right">
                                         <a href="/users/{{_id}}">
@@ -137,18 +131,7 @@
                                     </td>
                                 </tr>
                                 {{/each}}
-                             
-                                <tr>
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--info), var(--emerald));">DK</div><div class="table-user-info"><span class="table-user-name">David Kim</span><span class="table-user-email">david@example.com</span></div></div></td>
-                                    <td>User</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td>Jul 22, 2024</td>
-                                    <td>1 hour ago</td>
-                                    <td>
-                                        <button class="card-btn" style="padding: 6px 12px;">Edit</button>
-                                    </td>
-                                </tr>
-                               
+
                             </tbody>
                         </table>
                     </div>

@@ -9,6 +9,7 @@ router.get("/", inscriptionController.index);
 router.get("/create", inscriptionController.create);
 router.post("/create", inscriptionController.store);
 
+
 /*
 router.get("/:id/one", inscriptionController.getOne);
 

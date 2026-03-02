@@ -1,0 +1,89 @@
+ <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+           {{>menu}}
+
+            <!-- Settings Content -->
+         
+                <!-- Settings Navigation -->
+                
+                <!-- Settings Content -->
+                <div class="glass-card">
+                    <!-- Profile Tab -->
+                    <form action="/paiements/paiement" method="POST">
+
+                    <div class="settings-tab-content active" id="tab-profile">
+                        <div class="profile-header">
+                           
+                            <div class="profile-info">
+                                
+                                <p></p>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+
+                            <div class="form-grid">
+                                  <div class="form-group-settings">
+                                        <label for="exampleFormControlSelect1" class="form-label">Eleve</label>
+                                            <select class="settings-select" id="exampleFormControlSelect1" name="inscription">
+                                                <option value="">-- Selectionner un eleve</option>
+                                                {{#each Inscription}}
+                                                <option value="{{this._id}}">{{this.eleve.nom}}</option>
+                                                {{/each}}
+
+                                            </select>
+                                    </div>
+
+                                    <div class="form-group-settings">
+                                        <label for="paiementSelect" class="form-label">Catégorie de paiement</label>
+                                        <select class="settings-select" id="paiementSelect" name="paiementId">
+                                            <option value="" data-montant="0">-- Sélectionner une catégorie --</option>
+                                            {{#each Paiement}}
+                                            <option value="{{this._id}}" data-montant="{{this.montant}}">{{this.libelle}}</option>
+                                            {{/each}}
+                                        </select>
+                                        </div>
+
+                                        <div class="form-group-settings">
+                                        <label>Montant à payer</label>
+                                        <input type="text" id="montantInput" name="montantTotal" placeholder="" readonly>
+                                        </div>
+
+                                 <div class="form-group-settings">
+                                    <label>Montant payer</label>
+                                    <input type="text"  name="montantPaye" placeholder="" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" style="width: auto;">Save Changes</button>
+                            <button class="btn btn-secondary" style="width: auto;">Cancel</button>
+                        </div>
+                    </div>
+            </form>
+                    <!-- Security Tab -->
+                    
+                    <!-- Notifications Tab -->
+                    
+                    <!-- Billing Tab -->
+                    <div class="settings-tab-content" id="tab-billing">
+                        
+
+                        
+                    
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+  const paiementSelect = document.getElementById("paiementSelect");
+  const montantInput = document.getElementById("montantInput");
+
+  paiementSelect.addEventListener("change", function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const montant = selectedOption.getAttribute("data-montant");
+    montantInput.value = montant || ""; // met le montant ou vide si aucune option
+  });
+</script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture {{facture.numero}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .facture { border: 1px solid #ccc; padding: 20px; width: 600px; margin: auto; }
+        .header { text-align: center; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+   
+        <main class="main-content">
+  <div class="glass-card facture-print">
+    <h2>Facture n° {{facture.numero}}</h2>
+    <p><strong>Élève :</strong> {{facture.inscription.eleve.nom}} {{facture.inscription.eleve.prenom}}</p>
+    <p><strong>École :</strong> {{facture.inscription.ecole.libelle}}</p>
+    <p><strong>Classe :</strong> {{facture.inscription.classe.libelle}}</p>
+    <p><strong>Date :</strong> {{facture.createdAt}}</p>
+
+    <hr>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Catégorie</th>
+          <th>Montant Total</th>
+          <th>Montant Payé</th>
+          <th>Montant Restant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{facture.paiement.libelle}}</td>
+          <td>{{facture.montantTotal}}</td>
+          <td>{{facture.montantPaye}}</td>
+          <td>{{facture.montantRestant}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr>
+    <p><strong>Statut :</strong> {{facture.statut}}</p>
+
+    <button onclick="window.print()">Imprimer</button>
+  </div>
+</main>
+</body>
+</html>
