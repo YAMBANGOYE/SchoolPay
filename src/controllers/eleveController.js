@@ -5,34 +5,72 @@ const User = require('../models/user');
 const Ecole = require('../models/ecole');
 const Classe = require('../models/classe');
 const Activite = require('../models/activite');
+const Facture = require('../models/facture');
 const QRCode = require('qrcode');
+const Paiement = require('../models/paiement');
 const upload = require('../middlewares/upload');
 const path = require('path');
 const fs = require('fs');
+const paiement = require('../models/paiement');
+const Inscription = require('../models/inscription');
+const PaiementEfectue = require('../models/paiementEffectue');
 
-exports.index = async(req, res) => {
 
-     try {
-        
-        const nbrEleves = await Eleve.countDocuments();
-        const Eleves = await Eleve.find().populate("responsable").populate("ecole").lean();
-        const Ecoles = await Ecole.find().lean();
+exports.index = async (req, res) => {
+  try {
+    const nbrEleves = await Eleve.countDocuments({
+      ecole: req.session.userecoleId
+    });
 
-        const ElevesFinal = Eleves.map(eleve => ({
-            ...eleve,
-      prenomCourt: eleve.nom ? eleve.nom.substring(0, 2) : ""
-    }));
-     
-            res.render('eleve/show', { 
-                Eleves: ElevesFinal,
-                Ecoles,
-                title: 'Liste des élèves',
-                elevesActive: 'active' ,
-                nbrEleves : nbrEleves
-             });
-        } catch (error) {
-            res.status(400).send(error);
-        }
+    const Inscriptions = await Inscription.find({
+      ecole: req.session.userecoleId
+    })
+      .populate("eleve")
+      .populate("classe")
+      .populate("responsable")
+      .populate("ecole")
+      .lean();
+
+    for (let inscription of Inscriptions) {
+      const factures = await Facture.find({ inscription: inscription._id }).lean();
+      let totalFacture = 0;
+      let totalPaye = 0;
+
+      
+      for (let facture of factures) {
+        totalFacture += facture.montantTotal;
+        const paiements = await PaiementEfectue.find({ facture: facture._id }).lean();
+        totalPaye += paiements.reduce((acc, p) => acc + p.montant, 0);
+      console.log(`Total facture pour inscription ${inscription.eleve.nom}: ${totalFacture} - Total payé: ${totalPaye} =  Reste: ${totalFacture - totalPaye}`);
+      
+      }
+      console.log("-------------------------------------------------");
+      console.log(`Last Total facture pour inscription ${inscription.eleve.nom}: ${totalFacture} - Total payé: ${totalPaye} =  Reste: ${totalFacture - totalPaye}`);
+      const resteTotal = totalFacture - totalPaye;
+
+      
+      if (resteTotal === 0) {
+        inscription.status = "A jour";
+      } else if (totalPaye === 0) {
+        inscription.status = "En retarde";
+      } else {
+        inscription.status = "En attente";
+      }
+    }
+
+    const Ecoles = await Ecole.find().lean();
+
+    res.render('eleve/show', {
+      Inscriptions,
+      Ecoles,
+      title: 'Liste des élèves',
+      elevesActive: 'active',
+      nbrEleves
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).send('Erreur serveur');
+  }
 };
 
 exports.getOne = async(req, res) => {
@@ -53,11 +91,13 @@ exports.create = async(req, res) => {
             const Users = await User.find().lean();
             const Ecoles = await Ecole.find().lean();
             const Classes = await Classe.find().lean();
+            const Paiements = await Paiement.find().lean();
             
             res.render('eleve/add', {
                 elevesActive: 'active',
                 Ecoles,
                 Classes,
+                Paiements,
                 title: 'Liste des élèves',
                 Users}); 
         } catch (error) {
@@ -69,10 +109,21 @@ exports.store = async (req, res) => {
     console.log(req.body);
     try {
         const {
-            nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole, classe
-        } = req.body;
+            nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole, classe 
+         } = req.body;
 
-        const userData = { nom, prenom, username, email, telephone, datenaissance, status, responsable, ecole, classe };
+     const userData = {
+        nom,
+        prenom,
+        username,
+        email,
+        telephone,
+        datenaissance,
+        status,
+        responsable,
+        ecole,
+        classe
+        };
 
         // Génération du QR code
         const qrText = `ELEVE-${telephone}-${Date.now()}`;
@@ -81,13 +132,26 @@ exports.store = async (req, res) => {
 
         // Upload photo
         if (req.file) {
-            userData.photo = req.file.filename; // ⚡ juste le nom du fichier
+            userData.photo = req.file.filename; // juste le nom du fichier
         }
 
         // Création utilisateur
         const eleve = new Eleve(userData);
         await eleve.save();
         console.log('Élève créé avec succès :', eleve);
+
+        // Création inscription
+        const inscriptionData = {
+            ecole,
+            eleve: eleve._id,
+            classe,
+            responsable,
+            paiement: req.body.paiement
+        };
+        const inscription = new Inscription(inscriptionData);
+        await inscription.save();
+        console.log('Inscription créée avec succès :', inscription);
+
 
         // Création activité
         await Activite.create({

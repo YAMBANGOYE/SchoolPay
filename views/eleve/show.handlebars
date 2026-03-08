@@ -35,23 +35,35 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Nom</th>
+                                    <th>Nom et prenom</th>
                                     <th>Prenom</th>
                                     <th>Tuteur</th>
                                     <th>Etablissement</th>
+                                    <th>Classe</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="eleves-body">
                                 <!-- les couleurs du status change-->
-                                {{#each Eleves}}
-                                 <tr data-ecole="{{ecole.libelle}}">
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{nom}}</span><span class="table-user-email">{{responsable.email}}</span></div></div></td>
-                                    <td>{{prenom}}</td>
-                                    <td>{{responsable.nom}}</td>
-                                    <td>{{ecole.libelle}}</td>
-                                    <td><span class="status-badge completed">{{enligne}}</span></td>
+                                {{#each Inscriptions}}
+                                 <tr data-ecole="{{this.ecole.libelle}}">
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">  </div><div class="table-user-info"><span class="table-user-name">{{this.eleve.nom}}</span><span class="table-user-email">{{this.eleve.prenom}}</span></div></div></td>
+                                    <td></td>
+                                    <td>{{this.responsable.nom}}</td>
+                                    <td>{{this.ecole.libelle}}</td>
+                                    <td>{{this.classe.libelle}}</td>
+                                    
+                                    <td>
+                                        {{#if (eq this.status "A jour")}}
+                                            <span class="status-badge" style="background-color: var(--emerald);">A jour {{this.resteTotal}}</span>
+                                        {{else if (eq this.status "En attente")}}
+                                            <span class="status-badge" style="background-color: var(--gold);">En attente{{this.resteTotal}}</span>
+                                        {{else if (eq this.status "En retarde")}}
+                                            <span class="status-badge" style="background-color: var(--coral);">En retarde{{this.resteTotal}}</span>
+                                        {{else}}
+                                            <span class="status-badge" style="background-color: var(--gray);">Inconnu{{this.resteTotal}}</span>
+                                        {{/if}}
                                     <td>
                                       <div class="navbar-right">
                                         <a href="/eleves/{{_id}}/one">

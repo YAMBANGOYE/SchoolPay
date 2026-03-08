@@ -3,8 +3,8 @@ const Activite = require('../models/activite');
 const Facture = require('../models/facture');
 const Paiement = require('../models/paiement');
 const Niveau=  require('../models/niveau');
+const PaiementEffectue = require('../models/PaiementEffectue');
 
-const PaiementEffectue = require('../models/paiementEffectue');
 const User = require('../models/user');
 const mongoose = require('mongoose');
 
@@ -70,25 +70,67 @@ exports.storecategorie = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send("Erreur lors de la création de l'utilisateur");
+        res.status(500).send("Erreur lors de la création de la catégorie de paiement");
     }
 };
 
-exports.paiement = async(req, res) => {
-     try {
-           const inscriptions = await Inscription.find({}).populate('eleve').populate('classe').lean();
-            const paiements = await Paiement.find({}).lean();
+exports.paiement = async (req, res) => {
+  try {
+    // Récupérer les inscriptions avec les élèves et leurs catégories de paiement
 
-           console.log(inscriptions);
-            res.render('paiement/paiement', {
-                PaiementActive: 'active',
-                Inscription: inscriptions,
-                Paiement: paiements,
-                title: 'Paiement'
-            }); 
-        } catch (error) {
-            res.status(400).send(error);
-        }
+    const inscriptions = await Inscription.find({ecole: req.session.userecoleId})
+      .populate('eleve')
+      .populate('classe')
+      .populate('paiement') // toutes les catégories liées à cette inscription
+      .lean();
+
+    for (let inscription of inscriptions) {
+  inscription.factures = [];
+
+  // s'assurer que paiement est un tableau
+  const paiementsInscription = Array.isArray(inscription.paiement) ? inscription.paiement : [];
+
+  for (let paiement of paiementsInscription) {
+    // récupérer toutes les factures pour cette catégorie
+    const factures = await Facture.find({
+      inscription: inscription._id,
+      paiement: paiement._id
+    }).lean();
+
+    let totalPaye = 0;
+    for (let facture of factures) {
+      const paiementEffectueAgg = await PaiementEffectue.aggregate([
+        { $match: { facture: facture._id } },
+        { $group: { _id: null, total: { $sum: "$montant" } } }
+      ]);
+      totalPaye += paiementEffectueAgg[0]?.total || 0;
+    }
+
+    const reste = paiement.montant - totalPaye;
+
+    inscription.factures.push({
+      paiementId: paiement._id,
+      libelle: paiement.libelle,
+      montantTotal: paiement.montant,
+      totalPaye,
+      reste
+    });
+  }
+}
+
+    const paiements = await Paiement.find({}).lean();
+
+    res.render('paiement/paiement', {
+      PaiementActive: 'active',
+      Inscription: inscriptions,
+      Paiement: paiements,
+      title: 'Paiement'
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(400).send(error);
+  }
 };
 
 /// Générer un numéro de facture unique à 8 chiffres
@@ -97,7 +139,7 @@ const generateNumeroFacture = () => Math.floor(10000000 + Math.random() * 900000
 exports.creerFacture = async (req, res) => {
     
   try {
-    const { inscription, paiementId, montantPaye } = req.body;
+    const { inscription, paiementId, montantPaye,debiteur } = req.body;
 
     // 1️⃣ Récupérer l'inscription et le paiement
     const inscriptionDoc = await Inscription.findById(inscription)
@@ -130,6 +172,7 @@ exports.creerFacture = async (req, res) => {
         facture: facture._id,
         montant: montantPayeFinal,
         mode: req.body.mode || 'espèce',
+        debiteur: debiteur || 'N/A',
         user: req.session.userId
       });
       await paiementEffectue.save();

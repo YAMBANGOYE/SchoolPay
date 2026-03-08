@@ -26,7 +26,10 @@ const Inscriptionchema = new mongoose.Schema({
         ref: 'Classe',
         required: true 
     },
-
+    paiement: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Paiement' 
+    }],
     qrCode: String
 }, { timestamps: true })
 

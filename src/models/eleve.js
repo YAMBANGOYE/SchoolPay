@@ -31,7 +31,6 @@ const Eleveschema = new mongoose.Schema({
         type: String,
         required: false 
     },
-    
      status: {
         type: String,
         enum: ["A jour", "En attente", "En retarde"],

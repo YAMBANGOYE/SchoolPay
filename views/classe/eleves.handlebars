@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <div>
                             <h2 class="card-title">Liste des élèves de la classe {{classe.libelle}}</h2>
-                            <p class="card-subtitle">Nous avons {{eleves.length}} élèves dans cette classe</p>
+                            <p class="card-subtitle">Nous avons {{inscriptions.length}} élèves dans cette classe</p>
                         </div>
                         <div class="card-actions">
                             <a href="/classes/create">
@@ -50,13 +50,13 @@
                             </thead>
                             <tbody id="eleves-body">
                                 <!-- les couleurs du status change-->
-                                {{#each eleves}}
-                                 <tr data-ecole="{{ecole.libelle}}">
-                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{nom}}</span><span class="table-user-email">{{prenom}}</span></div></div></td>
-                                    <td>{{telephone}}</td>
-                                    <td>{{email}}</td>
-                                    <td>{{cycle}}</td>
-                                    <td>{{ecole.libelle}}</td>
+                                {{#each inscriptions}}
+                                 <tr data-ecole="{{this.ecole.libelle}}">
+                                    <td><div class="table-user"><div class="table-avatar" style="background: linear-gradient(135deg, var(--emerald-light), var(--emerald));">{{prenomCourt}}</div><div class="table-user-info"><span class="table-user-name">{{this.eleve.nom}}</span><span class="table-user-email">{{this.eleve.prenom}}</span></div></div></td>
+                                    <td>{{this.eleve.telephone}}</td>
+                                    <td>{{this.eleve.email}}</td>
+                                    <td>{{this.classe.cycle}}</td>
+                                    <td>{{this.ecole.libelle}}</td>
                                     <td>
                                       <div class="navbar-right">
                                         <a href="/classe/{{_id}}/one">

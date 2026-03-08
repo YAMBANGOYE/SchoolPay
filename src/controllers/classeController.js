@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Classe = require('../models/classe');
 const Ecole = require('../models/ecole');
 const Eleve = require('../models/eleve');
+const Inscription = require('../models/inscription');
 const upload = require('../middlewares/upload');
 const Activite = require('../models/activite');
 const path = require('path');
@@ -56,12 +57,16 @@ exports.getElevesWithClasse = async (req, res) => {
     }
   
     // Récupérer les élèves + infos de la classe (populate)
-    const eleves = await Eleve.find({ classe: classeId }).populate('classe').lean();
+   // const eleves = await Eleve.find({ classe: classeId }).populate('classe').lean();
 
-console.log(eleves);
+     const inscriptions = await Inscription.find({classe: classeId})
+          .populate('eleve')
+          .populate('classe')
+        //  .populate('paiement') // toutes les catégories liées à cette inscription
+          .lean();
 
     res.render('classe/eleves', {
-      eleves,
+      inscriptions,
       classe,
       title: 'Liste des élèves',
       classesActive: 'active'

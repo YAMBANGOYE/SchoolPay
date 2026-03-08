@@ -48,15 +48,24 @@ app.use(session({
 // Handlebars
 app.engine('handlebars', engine({
   helpers: {
-  formatDateRelative: function(date) {
-    const d = dayjs(date);
-    if (d.isSame(dayjs(), 'day')) {
-      return d.fromNow(); // "il y a 5 minutes"
-    } else {
-      return d.format('DD/MM/YYYY'); // "25/02/2026"
+
+    formatDateRelative: function(date) {
+      const d = dayjs(date);
+      if (d.isSame(dayjs(), 'day')) {
+        return d.fromNow();
+      } else {
+        return d.format('DD/MM/YYYY');
+      }
+    },
+
+    json: function(context) {
+      return JSON.stringify(context);
+    },
+      eq: function(a, b) {
+      return a === b;
     }
+
   }
-}
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname,"views"));
